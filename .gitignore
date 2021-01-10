@@ -1,4 +1,4 @@
 
 *.pyc
-*.pyc
-cogs/__pycache__/COGTEMPLETE.cpython-38.pyc
+cogs/__pycache__/
+./__pycache__/

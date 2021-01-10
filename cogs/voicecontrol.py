@@ -10,6 +10,15 @@ class voicecontrol(commands.Cog):
     async def on_ready(self):
         print('Cog voicecontrol ready')
 
+    @commands.command()
+    async def join(self, ctx):
+        channel = ctx.author.voice.channel
+        await channel.connect()
+
+    @commands.command()
+    async def leave(self, ctx):
+        await ctx.voice_client.disconnect()
+
     @commands.command(aliases=['muteall', 'm'])
     async def mutecall(self, ctx):
         if ctx.author.voice and ctx.author.voice.channel:

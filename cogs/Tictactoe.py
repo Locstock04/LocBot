@@ -40,7 +40,7 @@ class Tictactoe(commands.Cog):
             else:
                 board[placement-1] = c2
             turn = not turn
-            movelist.append(placement-1)
+            movelist.append(board)
             print(f'```{board[0]}{cw}{board[1]}{cw}{board[2]}\n{board[3]}{cw}{board[4]}{cw}{board[5]}\n{board[6]}{cw}{board[7]}{cw}{board[8]}```')
             await ctx.send(f'```{board[0]}{cw}{board[1]}{cw}{board[2]}\n{board[3]}{cw}{board[4]}{cw}{board[5]}\n{board[6]}{cw}{board[7]}{cw}{board[8]}```')
         else:
@@ -63,8 +63,7 @@ class Tictactoe(commands.Cog):
         global turn
         if len(movelist) != 0:
             turn = not turn
-            lastmove = movelist.pop()
-            board[lastmove] = c0
+            board = movelist.pop()
         print(f'```{board[0]}{cw}{board[1]}{cw}{board[2]}\n{board[3]}{cw}{board[4]}{cw}{board[5]}\n{board[6]}{cw}{board[7]}{cw}{board[8]}```')
         await ctx.send(f'```{board[0]}{cw}{board[1]}{cw}{board[2]}\n{board[3]}{cw}{board[4]}{cw}{board[5]}\n{board[6]}{cw}{board[7]}{cw}{board[8]}```')
 

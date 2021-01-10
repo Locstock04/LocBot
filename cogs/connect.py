@@ -21,7 +21,7 @@ class connect(commands.Cog):
     async def on_ready(self):
         print('Cog Connectfour ready')
 
-    @commands.command()
+    @commands.command(aliases=['cr'])
     async def cread(self, ctx):
 
         # IF CHANGING ANYTHING ABOUT THIS FUNCTION
@@ -45,7 +45,7 @@ class connect(commands.Cog):
         pic += '```'
         await ctx.send(pic)
 
-    @commands.command()
+    @commands.command(aliases=['cp'])
     async def cplace(self, ctx, placement):
         print('Running cplace')
         global board
@@ -75,7 +75,8 @@ class connect(commands.Cog):
                     turn = not turn
                     board[row] = temp.copy()
                     print('Placed Piece')
-                    movelist.append([row, placement])
+                    # movelist.append([row, placement])
+                    movelist.append(board)
                     Movedone = True
             else:
                 print('Move done, skipping')
@@ -102,18 +103,19 @@ class connect(commands.Cog):
 
 
 
-    @commands.command()
+    @commands.command(aliases=['cu'])
     async def cundo(self, ctx):
         global board
         global movelist
         global turn
         if len(movelist) != 0:
             turn = not turn
-            lastmove = movelist.pop()
-            print(lastmove)
-            temp = board[lastmove[0]].copy()
-            temp[int(lastmove[1])] = p0
-            board[lastmove[0]] = temp.copy()
+            # lastmove = movelist.pop()
+            # print(lastmove)
+            # temp = board[lastmove[0]].copy()
+            # temp[int(lastmove[1])] = p0
+            # board[lastmove[0]] = temp.copy()
+            board = movelist.pop()
         print(f'Undoing move at {lastmove}')
 
 
@@ -136,7 +138,7 @@ class connect(commands.Cog):
         await ctx.send(pic)
 
 
-    @commands.command()
+    @commands.command(aliases=['cs', 'cstart'])
     async def creset(self, ctx):
         pic = '```'
         global board

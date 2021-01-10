@@ -19,6 +19,7 @@ helpembed.add_field(name='.ping', value='Returns the latency', inline=False)
 helpembed.add_field(name='.help', value='Displays this!', inline=False)
 helpembed.add_field(name='.help voice', value='Displays help for voice chat', inline=False)
 helpembed.add_field(name='.help tictactoe', value='Displays help for Tic Tac Toe', inline=False)
+helpembed.add_field(name='.help connect', value='Displays help for Connect', inline=False)
 
 
 # Voice help
@@ -64,11 +65,11 @@ tttembed.add_field(name='.treset', value='Resets the game board', inline=False)
 
 
 
-# Tic Tac Toe help
+# Connect help
 connectembed = discord.Embed(
     title = 'This is Loc Bot; A Bot by Loc',
     colour = discord.Colour.green(),
-    description = 'Here are commands for playing tic tac toe'
+    description = 'Here are commands for playing connect'
 )
 connectembed.set_author(name='LocBot', icon_url = boticon)
 connectembed.set_thumbnail(url = locicon)

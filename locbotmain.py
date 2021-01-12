@@ -66,17 +66,31 @@ async def on_voice_state_update(member, before, after):
     print(f'Member: {member}')
     print(f'Before: {before}')
     print(f'Afterr: {after}')
+    # Joining call
     if before.channel is None and after.channel is not None:
         print('searching for voice-log')
-        for channel in client.get_all_channels():
+        gld = after.channel.guild
+        for channel in gld.text_channels:
             if channel.name == 'voice-log':
-                await channel.send(f'Hello {member.mention} you joined a voice channel ')
+                await channel.send(f'Hey {member.mention} you joined \'{after.channel}\'')
 
+    # Moving call
+    if before.channel is not None and after.channel is not None:
+        print('searching for voice-log')
+        gld = after.channel.guild
+        for channel in gld.text_channels:
+            if channel.name == 'voice-log':
+                await channel.send(f'Cya {member.mention} you moved from \'{before.channel}\' to {after.channel}')
+
+    # Leaving call
     if before.channel is not None and after.channel is None:
         print('searching for voice-log')
-        for channel in client.get_all_channels():
+        gld = before.channel.guild
+        for channel in gld.text_channels:
             if channel.name == 'voice-log':
-                await channel.send(f'Bye {member.mention} you left a voice channel ')
+                await channel.send(f'Bye {member.mention} you left \'{before.channel}\'')
+
+
 
 token = open("..\locbottoken.txt", "r")
 client.run(token.read())

@@ -19,6 +19,14 @@ class voicecontrol(commands.Cog):
     async def leave(self, ctx):
         await ctx.voice_client.disconnect()
 
+    @commands.command(aliases=['listpeopleincall'])
+    async def peopleincall(self, ctx):
+        voiceid = ctx.author.voice.channel
+        usersincall = voiceid.members
+        print(usersincall)
+        await ctx.send(usersincall)
+
+
     @commands.command(aliases=['muteall', 'm'])
     async def mutecall(self, ctx):
         if ctx.author.voice and ctx.author.voice.channel:

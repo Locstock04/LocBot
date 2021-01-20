@@ -31,7 +31,6 @@ async def reload(ctx, extension):
 @client.event
 async def on_ready():
     print('Bot is ready.')
-    await client.change_presence(status=discord.Status.online, activity=activity)
 
 @client.command()
 async def ping(ctx):
@@ -56,11 +55,12 @@ async def on_voice_state_update(member, before, after):
                 await channel.send(f'Hey {member.mention} you joined \'{after.channel}\'')
     # Moving call
     if before.channel is not None and after.channel is not None:
-        print('searching for voice-log')
-        gld = after.channel.guild
-        for channel in gld.text_channels:
-            if channel.name == 'voice-log':
-                await channel.send(f'Cya {member.mention} you moved from \'{before.channel}\' to {after.channel}')
+        if before.channel is not after.channel:
+            print('searching for voice-log')
+            gld = after.channel.guild
+            for channel in gld.text_channels:
+                if channel.name == 'voice-log':
+                    await channel.send(f'Cya {member.mention} you moved from \'{before.channel}\' to \'{after.channel}\'')
     # Leaving call
     if before.channel is not None and after.channel is None:
         print('searching for voice-log')

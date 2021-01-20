@@ -19,7 +19,7 @@ class activity(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         print('Cog activity loaded')
-        await self.client.change_presence(presence=currentpresence,activity=currentactivity)
+        await self.client.change_presence(status=currentpresence,activity=currentactivity)
 
     @commands.command()
     async def status(self, ctx, mode, *newstatus):
@@ -53,7 +53,7 @@ class activity(commands.Cog):
         global currentpresence
 
         oldpresence = currentpresence
-        
+
         if presence == 'online':
             newpresence = discord.Status.online
         elif presence == 'idle' or presence == 'away' or presence == 'afk':

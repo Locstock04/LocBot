@@ -4,7 +4,8 @@ from discord.ext import commands
 
 #quotes = ['I did not forgot where the body was', 'Kimy is kind of sus']
 #quotes.append('*Comms get sabotaged* You all know who to vote')
-quotes = ['#Tessaragequit']
+#quotes = ['#Tessaragequit']
+quotes = ['Coolio']
 
 currentactivity = discord.Game(name=random.choice(quotes))
 currentpresence = discord.Status.online

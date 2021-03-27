@@ -26,7 +26,7 @@ class voicecontrol(commands.Cog):
         print(usersincall)
         await ctx.send(usersincall)
 
-
+    @commands.has_permissions(mute_members=True)
     @commands.command(aliases=['muteall', 'm'])
     async def mutecall(self, ctx):
         if ctx.author.voice and ctx.author.voice.channel:
@@ -56,6 +56,7 @@ class voicecontrol(commands.Cog):
             await ctx.send("You need to be inside a voice channel to use this!")
             return
 
+    @commands.has_permissions(deafen_members=True)
     @commands.command(aliases=['deafenall', 'd'])
     async def deafencall(self, ctx):
         if ctx.author.voice and ctx.author.voice.channel:
@@ -84,6 +85,7 @@ class voicecontrol(commands.Cog):
             await ctx.send("You need to be inside a voice channel to use this!")
             return
 
+    @commands.has_permissions(move_members=True)
     @commands.command(aliases=['moveall', 'ma, mc, move'])
     async def movecall(self, ctx, *, channel : discord.VoiceChannel):
         for members in ctx.author.voice.channel.members:

@@ -1,5 +1,6 @@
 import discord
 import os
+from datetime import datetime
 from discord.ext import commands
 
 client = commands.Bot(command_prefix = '.')
@@ -43,12 +44,13 @@ async def testmessage(ctx):
 
 @client.event
 async def on_voice_state_update(member, before, after):
+    print(f'\nTime is: {datetime.now()}')
     print(f'Member: {member}')
     print(f'Before: {before}')
     print(f'Afterr: {after}')
     # Joining call
     if before.channel is None and after.channel is not None:
-        print('searching for voice-log')
+        # print('searching for voice-log')
         gld = after.channel.guild
         for channel in gld.text_channels:
             if channel.name == 'voice-log':
@@ -56,14 +58,14 @@ async def on_voice_state_update(member, before, after):
     # Moving call
     if before.channel is not None and after.channel is not None:
         if before.channel is not after.channel:
-            print('searching for voice-log')
+            # print('searching for voice-log')
             gld = after.channel.guild
             for channel in gld.text_channels:
                 if channel.name == 'voice-log':
                     await channel.send(f'Cya {member.mention} you moved from \'{before.channel}\' to \'{after.channel}\'')
     # Leaving call
     if before.channel is not None and after.channel is None:
-        print('searching for voice-log')
+        # print('searching for voice-log')
         gld = before.channel.guild
         for channel in gld.text_channels:
             if channel.name == 'voice-log':

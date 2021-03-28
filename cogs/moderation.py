@@ -1,5 +1,15 @@
 import discord
 from discord.ext import commands
+import datetime
+import pytz
+
+notableperms = ['administrator', 'manage_guild', 'manage_roles', 'manage_channels', 'manage_messages', 'manage_nicknames', 'manage_emojis','kick_members', 'ban_members', 'mention_everyone']
+
+def filterperms(perm):
+    if(perm in notableperms):
+        return True
+    else:
+        return False
 
 class moderation(commands.Cog):
 
@@ -36,11 +46,83 @@ class moderation(commands.Cog):
     async def purge(self, ctx, amount: int):
         if amount > 50:
             amount = 50
-        await ctx.channel.purge(limit=amount)
+        await ctx.channel.purge(limit=amount+1)
 
-    @commands.command()
+    @commands.command(aliases=['announce'])
     async def sendmessage(self, ctx, channelid: discord.TextChannel, * , message=''):
         await channelid.send(message)
+
+    @commands.command()
+    async def whois(self, ctx, member: discord.Member = None):
+
+        if member == None:
+            member = ctx.author
+
+        discordtimezone = pytz.timezone("Etc/GMT-0")
+        newtimezone = pytz.timezone("Australia/Melbourne")
+
+        usericon = member.avatar_url
+        userembed = discord.Embed(
+            #title = '',
+            colour = discord.Colour.green(),
+            description = f'{member.mention}'
+        )
+        userembed.set_author(name=f'{member}', icon_url = usericon)
+        userembed.set_thumbnail(url = usericon)
+        #userembed.set_image(url = )
+        userembed.set_footer(text=f'ID: {member.id}')
+
+        jointime = member.joined_at
+        jointimenew = discordtimezone.localize(jointime).astimezone(newtimezone)
+        userembed.add_field(name='Joined', value=f'{jointimenew.strftime("%a, %dth of %b, %Y %I:%M:%S%p")}', inline=True)
+
+        registertime = member.created_at
+        registertimenew = discordtimezone.localize(registertime).astimezone(newtimezone)
+        userembed.add_field(name='Registered', value=f'{registertimenew.strftime("%a, %dth of %b, %Y %I:%M:%S%p")}', inline=True)
+
+        print(member.roles)
+        if len(member.roles) != 1:
+            rolelist = [r.mention for r in member.roles if r != ctx.guild.default_role]
+            roles = ', '.join(rolelist)
+        else:
+            roles = 'None'
+        print(roles)
+        userembed.add_field(name=f'Roles [{len(member.roles)-1}]', value=f'{roles}', inline=False)
+
+        rawpermslist = [perm[0] for perm in member.guild_permissions if perm[1]]
+        permlist = list(filter(filterperms, rawpermslist))
+        if len(permlist) > 1:
+            perms = ''
+            for perm in permlist:
+                perms += perm.replace('_', ' ')
+                if permlist[len(permlist)-1] != perm:
+                     perms += ', '
+            perms = perms.title()
+        elif len(permlist) == 1:
+            print(permlist)
+            perms = permlist[0].replace('_', ' ').title()
+            print(perms)
+        else:
+            perms = 'None'
+
+        userembed.add_field(name='Notable Permissions', value=f'{perms}', inline=False)
+
+        acknow = []
+        if member.id == 327690857027207189:
+            acknow.extend(['The Creator of Loc Bot'])
+        if member.id == 473818153663594497:
+            acknow.extend(['It\'s me! Loc Bot'])
+
+        # ctx.guild.owner returns None
+        if member == ctx.guild.owner:
+            acknow.extend(['Server Owner'])
+        elif member.guild_permissions.administrator:
+            acknow.extend(['Server Admin'])
+        acknowledgements = ', '.join(acknow)
+        if acknow != []:
+            userembed.add_field(name='Acknowledgements', value=f'{acknowledgements }', inline=False)
+
+        await ctx.send(embed=userembed)
 
 
 

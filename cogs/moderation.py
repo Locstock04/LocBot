@@ -58,9 +58,11 @@ class moderation(commands.Cog):
         if member == None:
             member = ctx.author
 
+        # Timezone stuff
         discordtimezone = pytz.timezone("Etc/GMT-0")
         newtimezone = pytz.timezone("Australia/Melbourne")
 
+        # Get user icon and basic embed stuff ready
         usericon = member.avatar_url
         userembed = discord.Embed(
             #title = '',
@@ -72,23 +74,27 @@ class moderation(commands.Cog):
         #userembed.set_image(url = )
         userembed.set_footer(text=f'ID: {member.id}')
 
+        # Gets time user joined server
         jointime = member.joined_at
         jointimenew = discordtimezone.localize(jointime).astimezone(newtimezone)
         userembed.add_field(name='Joined', value=f'{jointimenew.strftime("%a, %dth of %b, %Y %I:%M:%S%p")}', inline=True)
 
+        # Gets time user registered account
         registertime = member.created_at
         registertimenew = discordtimezone.localize(registertime).astimezone(newtimezone)
         userembed.add_field(name='Registered', value=f'{registertimenew.strftime("%a, %dth of %b, %Y %I:%M:%S%p")}', inline=True)
 
+        # Gets user roles
         print(member.roles)
         if len(member.roles) != 1:
             rolelist = [r.mention for r in member.roles if r != ctx.guild.default_role]
-            roles = ', '.join(rolelist)
+            roles = ' '.join(rolelist)
         else:
             roles = 'None'
         print(roles)
         userembed.add_field(name=f'Roles [{len(member.roles)-1}]', value=f'{roles}', inline=False)
 
+        # User notable perms
         rawpermslist = [perm[0] for perm in member.guild_permissions if perm[1]]
         permlist = list(filter(filterperms, rawpermslist))
         if len(permlist) > 1:

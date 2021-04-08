@@ -5,7 +5,7 @@ loc bot, a bot by loc
 Loc Bot is a discord bot written in python, it contains a wide variety of commands, it was originally developed for a group of friends but now continues to be worked on for practice and to be hopefully be an example python bot 
 
 ### How to run
-The actual Loc Bot is private
+The actual Loc Bot is private, however you can run you're own version following the steps below
 1. Make sure you have the necessory stuff to run a discord bot, this means having [python](https://www.python.org/) and [discord py](https://discordpy.readthedocs.io/en/latest/intro.html)
 2. Create a clone of this repository
 3. Set up a [bot application](https://discord.com/developers/applications)

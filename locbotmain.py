@@ -53,7 +53,7 @@ async def on_voice_state_update(member, before, after):
         # print('searching for voice-log')
         gld = after.channel.guild
         for channel in gld.text_channels:
-            if channel.name == 'voice-log':
+            if channel.name == '｜voice-log':
                 await channel.send(f'Hey {member.mention} you joined \'{after.channel}\'')
     # Moving call
     if before.channel is not None and after.channel is not None:
@@ -61,14 +61,14 @@ async def on_voice_state_update(member, before, after):
             # print('searching for voice-log')
             gld = after.channel.guild
             for channel in gld.text_channels:
-                if channel.name == 'voice-log':
+                if channel.name == '｜voice-log':
                     await channel.send(f'Cya {member.mention} you moved from \'{before.channel}\' to \'{after.channel}\'')
     # Leaving call
     if before.channel is not None and after.channel is None:
         # print('searching for voice-log')
         gld = before.channel.guild
         for channel in gld.text_channels:
-            if channel.name == 'voice-log':
+            if channel.name == '｜voice-log':
                 await channel.send(f'Bye {member.mention} you left \'{before.channel}\'')
 
 

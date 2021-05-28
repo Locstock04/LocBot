@@ -48,9 +48,40 @@ class moderation(commands.Cog):
             amount = 50
         await ctx.channel.purge(limit=amount+1)
 
-    @commands.command(aliases=['announce'])
+    @commands.command(aliases=['announce', 'sm'])
     async def sendmessage(self, ctx, channelid: discord.TextChannel, * , message=''):
+        print(channelid)
         await channelid.send(message)
+
+
+    @commands.command(pass_context=True)
+    @commands.has_permissions(manage_messages=True)
+    async def role(self, ctx,*args):
+        server = ctx.message.guild
+        role_name = (' '.join(args))
+        role_id = server.roles[0]
+        for role in server.roles:
+            if role_name == role.name:
+                role_id = role
+                break
+        else:
+            await ctx.send("Role doesn't exist")
+            return
+        for member in server.members:
+            if role_id in member.roles:
+                await ctx.send(f"{member.display_name} - {member.id}")
+
+    @commands.command(pass_context=True)
+    async def test(self, ctx, role_id: int):
+        role = discord.utils.get(ctx.guild.roles, id=role_id)
+        print(role)
+        listomembers = ctx.guild.members
+        member_list = ''
+        for member in ctx.message.guild.members:
+            member_list += member.name
+        print(member_list)
+
+        # await ctx.send(role.members)
 
     @commands.command()
     async def whois(self, ctx, member: discord.Member = None):

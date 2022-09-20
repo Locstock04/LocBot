@@ -10,5 +10,5 @@ The actual Loc Bot is private, however you can run you're own version following 
 2. Create a clone of this repository
 3. Set up a [bot application](https://discord.com/developers/applications)
 4. Create a .txt document in the same folder as the clone (next to the locbotmain.py file), this .txt should contain only discord bot token that you can get from the 'Bot' section of the application
-5. On the [application](https://discord.com/developers/applications) screen select OAuth2, select bot and Administrator then open the provided link to add the bot to a server
+5. On the [application](https://discord.com/developers/applications) screen select OAuth2, select bot and Administrator then open the provided link to add the bot to a server and make sure Privileged Gateway Intents are all turned on
 6. Open locbotmain.py (you may need to install certain things for some cogs of the bot however majority should work)

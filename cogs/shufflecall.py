@@ -50,5 +50,5 @@ class shufflecall(commands.Cog):
             await ctx.send("You need to be inside a voice channel to use this!")
             return
 
-def setup(client):
-    client.add_cog(shufflecall(client))
+async def setup(client):
+    await client.add_cog(shufflecall(client))

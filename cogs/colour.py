@@ -25,7 +25,7 @@ class colour(commands.Cog):
             for c in range(len(rgb)): rgb[c] = int(info[c*2] + info[c*2+1], 16)
         elif len(info) == 3:
             for c in range(len(rgb)): rgb[c] = int(2*info[c], 16)
-        img = Image.new('RGB', (64, 64), color = (rgb[0], rgb[1], rgb[2]))
+        img = Image.new('RGB', (128, 128), color = (rgb[0], rgb[1], rgb[2]))
         img.save(savepath)
 
         colourembed = discord.Embed(colour = discord.Colour.from_rgb(rgb[0], rgb[1], rgb[2]))
@@ -36,5 +36,5 @@ class colour(commands.Cog):
         file = discord.File(savepath, filename = 'colour.png')
         await ctx.send(file=file, embed=colourembed)
 
-def setup(client):
-    client.add_cog(colour(client))
+async def setup(client):
+    await client.add_cog(colour(client))

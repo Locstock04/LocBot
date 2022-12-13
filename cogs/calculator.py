@@ -42,5 +42,5 @@ class calculator(commands.Cog):
     async def cal(self, ctx, *, stuffs):
         print('add calc stuff')
 
-def setup(client):
-    client.add_cog(calculator(client))
+async def setup(client):
+    await client.add_cog(calculator(client))

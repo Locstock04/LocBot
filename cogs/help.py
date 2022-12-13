@@ -109,5 +109,5 @@ class help(commands.Cog):
         # await ctx.send('A help message has been sent to your private messages')
 
 
-def setup(client):
-    client.add_cog(help(client))
+async def setup(client):
+    await client.add_cog(help(client))

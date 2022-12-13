@@ -16,5 +16,21 @@ class COGTEMPLETE(commands.Cog):
     async def COGTEMPLETEFUNCTION(self, ctx):
         print('Why are you calling this?')
 
-def setup(client):
-    client.add_cog(COGTEMPLETE(client))
+async def setup(client):
+    await client.add_cog(COGTEMPLETE(client))
+
+
+
+'''
+
+cogs = []
+for filename in os.listdir("./cogs"):
+    if filename.endswith(".py"):
+        cogs.append(f"cogs.{filename[:-3]}")
+
+print(cogs)
+async def load_extensions():
+    for i in range(len(cogs)):            # cut off the .py from the file name
+        await client.load_extension(f"cogs.{cogs[i]}")
+
+'''

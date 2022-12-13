@@ -26,12 +26,14 @@ class voicecontrol(commands.Cog):
         print(usersincall)
         await ctx.send(usersincall)
 
-    @commands.has_permissions(mute_members=True)
+    #@commands.has_permissions(mute_members=True)
     @commands.command(aliases=['muteall', 'm'])
     async def mutecall(self, ctx):
+        print("Attempting to mute call")
         if ctx.author.voice and ctx.author.voice.channel:
             voiceid = ctx.author.voice.channel
             usersincall = voiceid.members
+            print(f"Detected users in call are: {usersincall}")
             for i in range(0, len(usersincall)):
                 user = usersincall[i]
                 print(f'Muting user {i}: {user}')
@@ -43,6 +45,7 @@ class voicecontrol(commands.Cog):
 
     @commands.command(aliases=['unmuteall', 'u'])
     async def unmutecall(self, ctx):
+        print("Attempting to unmute call")
         if ctx.author.voice and ctx.author.voice.channel:
             voiceid = ctx.author.voice.channel
             usersincall = voiceid.members
@@ -56,7 +59,7 @@ class voicecontrol(commands.Cog):
             await ctx.send("You need to be inside a voice channel to use this!")
             return
 
-    @commands.has_permissions(deafen_members=True)
+    #@commands.has_permissions(deafen_members=True)
     @commands.command(aliases=['deafenall', 'd'])
     async def deafencall(self, ctx):
         if ctx.author.voice and ctx.author.voice.channel:
@@ -85,7 +88,7 @@ class voicecontrol(commands.Cog):
             await ctx.send("You need to be inside a voice channel to use this!")
             return
 
-    @commands.has_permissions(move_members=True)
+    #@commands.has_permissions(move_members=True)
     @commands.command(aliases=['moveall', 'ma, mc, move'])
     async def movecall(self, ctx, *, channel : discord.VoiceChannel):
         for members in ctx.author.voice.channel.members:
@@ -133,5 +136,5 @@ class voicecontrol(commands.Cog):
 
 
 
-def setup(client):
-    client.add_cog(voicecontrol(client))
+async def setup(client):
+    await client.add_cog(voicecontrol(client))

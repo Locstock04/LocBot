@@ -164,5 +164,5 @@ class connect(commands.Cog):
         await ctx.send('Cog connect is running')
 
 
-def setup(client):
-    client.add_cog(connect(client))
+async def setup(client):
+    await client.add_cog(connect(client))

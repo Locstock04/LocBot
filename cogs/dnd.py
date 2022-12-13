@@ -28,5 +28,5 @@ class dnd(commands.Cog):
                 land += f'{flip+1}: Heads\n'
         await ctx.send(land)
 
-def setup(client):
-    client.add_cog(dnd(client))
+async def setup(client):
+    await client.add_cog(dnd(client))

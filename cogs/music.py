@@ -1,6 +1,7 @@
 import discord
 from discord.ext import commands
 import youtube_dl
+import ffmpeg
 import os
 
 class music(commands.Cog):
@@ -39,7 +40,12 @@ class music(commands.Cog):
         for file in os.listdir("./"):
             if file.endswith(".mp3"):
                 os.rename(file, "song.mp3")
+            if file.endswith(".m4a"):
+                os.rename(file, "song.mp3")
+            if file.endswith(".webm"):
+                os.rename(file, "song.mp3")
         voice.play(discord.FFmpegPCMAudio("song.mp3"))
+        # voice.play(discord.FFmpegPCMAudio(executable="D:\ffmpeg-2022-09-19-git-4ba68639ca-full_build\bin\ffmpeg.exe", source="song.mp3"))
 
     @commands.command()
     async def leave(self, ctx):
@@ -70,5 +76,5 @@ class music(commands.Cog):
         voice = discord.utils.get(self.client.voice_clients, guild=ctx.guild)
         voice.stop()
 
-def setup(client):
-    client.add_cog(music(client))
+async def setup(client):
+    await client.add_cog(music(client))

@@ -66,5 +66,5 @@ class activity(commands.Cog):
         currentpresence = newpresence
         await self.client.change_presence(status=newpresence,activity=currentactivity)
 
-def setup(client):
-    client.add_cog(activity(client))
+async def setup(client):
+    await client.add_cog(activity(client))

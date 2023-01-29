@@ -46,32 +46,27 @@ async def checkallcogs(ctx, extension):
 
 @client.command()
 async def load(ctx, extension):
-    print(f'Loading {extension}')
+    print(f'Trying to load {extension}')
     await client.load_extension(f'cogs.{extension}')
-    # await client.cog_load(f'cogs.{extension}')
     print(f'Loaded {extension}')
 
 
 @client.command()
 async def unload(ctx, extension):
-    print(f'Unloading {extension}')
+    print(f'Trying to unload {extension}')
     await client.unload_extension(f'cogs.{extension}')
     print(f'Unloaded {extension}')
 
 @client.command()
 async def reload(ctx, extension):
-    print(f'Reloading {extension}')
+    print(f'Trying to reload {extension}')
     await client.unload_extension(f'cogs.{extension}')
     await client.load_extension(f'cogs.{extension}')
-    # await client.cog_unload(f'cogs.{extension}')
-    # await client.cog_load(f'cogs.{extension}')
     print(f'Reloaded {extension}')
 
 @client.event
 async def on_ready():
-    print('Bot is nearly ready 1.')
     await client.tree.sync()
-    print('Bot is nearly ready 2.')
     await client.tree.sync(guild=discord.Object(id=443290183274856468))
     print('Bot is ready.')
 
@@ -79,14 +74,7 @@ async def on_ready():
 async def ping(ctx):
     await ctx.send(f'Pong! {round(client.latency * 1000)}ms')
 
-@client.command()
-async def testmessage(ctx):
-    print(f'Testing message send, hello {ctx.author.name}')
-    await ctx.author.send(f'Testing message send, hello {ctx.author.name}')
-
-
 token = open("..\locbottoken.txt", "r")
-
 async def main():
     async with client:
         # client.loop.create_task(background_task())

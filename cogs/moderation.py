@@ -97,19 +97,16 @@ class moderation(commands.Cog):
 
     @commands.command()
     async def whois(self, ctx, member: discord.Member = None):
-        print("Running who is command 1")
         if member == None:
             member = ctx.author
-        print(f"User testing is {member}")
 
         # Timezone stuff
         discordtimezone = pytz.timezone("Etc/GMT-0")
         newtimezone = pytz.timezone("Australia/Melbourne")
-        print("Set time zones")
 
         # Get user icon and basic embed stuff ready
         usericon = member.display_avatar
-        print("Running who is command 1.5")
+        print(usericon)
         userembed = discord.Embed(
             #title = '',
             colour = discord.Colour.green(),
@@ -122,12 +119,9 @@ class moderation(commands.Cog):
 
         # Gets time user joined server
         jointime = member.joined_at
-        print(f"Time member join was {jointime}")
-        print(discordtimezone, jointime)
 
         fixjointime = datetime.datetime(jointime.year, jointime.month, jointime.day, jointime.hour, jointime.minute, jointime.second, 0)
         jointime = fixjointime
-        print(discordtimezone.localize(jointime))
         jointimenew = discordtimezone.localize(jointime).astimezone(newtimezone)
 
         userembed.add_field(name='Joined', value=f'{jointimenew.strftime("%a, %dth of %b, %Y %I:%M:%S%p")}', inline=True)
@@ -139,13 +133,11 @@ class moderation(commands.Cog):
         registertimenew = discordtimezone.localize(registertime).astimezone(newtimezone)
         userembed.add_field(name='Registered', value=f'{registertimenew.strftime("%a, %dth of %b, %Y %I:%M:%S%p")}', inline=True)
         # Gets user roles
-        print(member.roles)
         if len(member.roles) != 1:
             rolelist = [r.mention for r in member.roles if r != ctx.guild.default_role]
             roles = ' '.join(rolelist)
         else:
             roles = 'None'
-        print(roles)
         userembed.add_field(name=f'Roles [{len(member.roles)-1}]', value=f'{roles}', inline=False)
         # User notable perms
         rawpermslist = [perm[0] for perm in member.guild_permissions if perm[1]]
@@ -158,12 +150,9 @@ class moderation(commands.Cog):
                      perms += ', '
             perms = perms.title()
         elif len(permlist) == 1:
-            print(permlist)
             perms = permlist[0].replace('_', ' ').title()
-            print(perms)
         else:
             perms = 'None'
-        print("Running who is command 5")
         userembed.add_field(name='Notable Permissions', value=f'{perms}', inline=False)
 
         acknow = []
@@ -171,7 +160,6 @@ class moderation(commands.Cog):
             acknow.extend(['The Creator of Loc Bot'])
         if member.id == 473818153663594497:
             acknow.extend(['It\'s me! Loc Bot'])
-        print("Running who is command 21312312312")
         # ctx.guild.owner returns None
         if member == ctx.guild.owner:
             acknow.extend(['Server Owner'])
